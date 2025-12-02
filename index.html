@@ -133,6 +133,29 @@
         max-width: 90%;
       }
 
+      /* QR code styling */
+      .qr-code-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .qr-code-label {
+        font-size: 1.1rem;
+        color: var(--firm-blue);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      canvas[id$="QR"] {
+        background: white;
+        padding: 0.5rem;
+        border-radius: 8px;
+        display: block;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
       /* Workshop slide specific layout */
       .reveal .slides section:has(.workshop-button) {
         flex-direction: row !important;
@@ -607,17 +630,35 @@
         </section>
 
         <section>
-          <h2>Sources</h2>
-          <ul style="font-size: 1.4rem;">
-            <li class="fragment fade-up">
-              McKinsey & Company<br>
-              <a href="https://www.mckinsey.com/capabilities/tech-and-ai/our-insights/the-business-value-of-design#/" target="_blank">The Business Value of Design</a>
-            </li>
-            <li class="fragment fade-up">
-              Medium (Design Bootcamp)<br>
-              <a href="https://medium.com/design-bootcamp/ux-is-the-frontline-of-product-led-growth-cfededa20309" target="_blank">UX is the Frontline of Product-Led Growth</a>
-            </li>
-          </ul>
+          <h2>Sources & References</h2>
+          <div style="display: flex; flex-direction: column; gap: 2rem; margin-top: 1.5rem; max-width: 900px; margin-left: auto; margin-right: auto;">
+            <div class="fragment fade-up" style="display: flex; align-items: center; gap: 2rem;">
+              <div style="flex: 1;">
+                <strong style="color: var(--firm-blue); font-size: 1.3rem;">McKinsey & Company</strong><br>
+                <a href="https://www.mckinsey.com/capabilities/tech-and-ai/our-insights/the-business-value-of-design#/" target="_blank" style="font-size: 1.1rem;">The Business Value of Design</a>
+              </div>
+              <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&color=032A24&data=https://www.mckinsey.com/capabilities/tech-and-ai/our-insights/the-business-value-of-design" alt="McKinsey QR" style="background: white; padding: 0.4rem; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            </div>
+            <div class="fragment fade-up" style="display: flex; align-items: center; gap: 2rem;">
+              <div style="flex: 1;">
+                <strong style="color: var(--firm-blue); font-size: 1.3rem;">Medium (Design Bootcamp)</strong><br>
+                <a href="https://medium.com/design-bootcamp/ux-is-the-frontline-of-product-led-growth-cfededa20309" target="_blank" style="font-size: 1.1rem;">UX is the Frontline of Product-Led Growth</a>
+              </div>
+              <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&color=032A24&data=https://medium.com/design-bootcamp/ux-is-the-frontline-of-product-led-growth-cfededa20309" alt="Medium QR" style="background: white; padding: 0.4rem; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2>Presentation Link</h2>
+          <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 2rem;">
+            <div class="fragment fade-up" style="text-align: center;">
+              <img src="https://api.qrserver.com/v1/create-qr-code/?size=280x280&color=032A24&data=https://letsreg-plg.netlify.app/" alt="Presentation QR" style="background: white; padding: 0.75rem; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.15);">
+              <p style="margin-top: 1.5rem; font-size: 1.3rem; color: var(--firm-blue); font-weight: 500;">
+                <a href="https://letsreg-plg.netlify.app/" target="_blank" style="color: inherit;">letsreg-plg.netlify.app</a>
+              </p>
+            </div>
+          </div>
         </section>
 
       </div>
@@ -838,7 +879,7 @@
       });
 
       // Set up fragment indicators updates
-      Reveal.on('slidechanged', () => {
+      Reveal.on('slidechanged', (event) => {
         updateFragmentIndicators();
         checkForSources();
         // Hide sources when changing slides
@@ -855,6 +896,7 @@
         } else {
           document.body.classList.remove('on-title-slide');
         }
+        
       });
       Reveal.on('fragmentshown', updateFragmentIndicators);
       Reveal.on('fragmenthidden', updateFragmentIndicators);
@@ -871,6 +913,7 @@
         } else {
           document.body.classList.remove('on-title-slide');
         }
+        
       }, 100);
       
       function toggleSources() {
