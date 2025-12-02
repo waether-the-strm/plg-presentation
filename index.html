@@ -1,0 +1,998 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>LetsReg – Design, UX & Product-Led Growth</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/reveal.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/theme/white.min.css" />
+
+    <style>
+      :root {
+        --neon: #21F3B3;
+        --firm-blue: #01636B;
+        --calm-blue: #03373C;
+        --deep-green: #032A24;
+        --orange: #FA7154;
+        --pink: #FBC3B7;
+        --mint: #ECFFF8;
+      }
+
+      * {
+        font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      }
+
+      body {
+        font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        font-weight: 400;
+        letter-spacing: -0.01em;
+      }
+
+      .reveal {
+        font-size: 2.5rem;
+      }
+
+      .reveal h1 {
+        font-size: 4.5rem;
+        font-weight: 700;
+        color: var(--deep-green);
+        letter-spacing: -0.03em;
+        margin-bottom: 1rem;
+        line-height: 1.1;
+      }
+
+      .reveal h2 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        color: var(--deep-green);
+        letter-spacing: -0.02em;
+        margin-bottom: 1.5rem;
+        line-height: 1.2;
+      }
+
+      .reveal h3 {
+        font-size: 2.2rem;
+        font-weight: 500;
+        color: var(--calm-blue);
+        letter-spacing: -0.01em;
+        margin-bottom: 1rem;
+        line-height: 1.3;
+      }
+
+      .reveal p {
+        font-size: 1.8rem;
+        line-height: 1.6;
+        color: var(--calm-blue);
+        margin-bottom: 1.5rem;
+      }
+
+      .reveal ul, .reveal ol {
+        text-align: left;
+        display: inline-block;
+        font-size: 1.6rem;
+        line-height: 1.8;
+        color: var(--calm-blue);
+      }
+
+      .reveal li {
+        margin-bottom: 1rem;
+      }
+
+      .accent {
+        color: var(--firm-blue);
+        font-weight: 600;
+      }
+
+      .big-number {
+        font-size: 7rem;
+        font-weight: 700;
+        color: var(--orange);
+        letter-spacing: -0.05em;
+        margin: 2rem 0;
+        line-height: 1;
+      }
+
+      .section-title {
+        font-size: 3.8rem !important;
+        color: var(--deep-green);
+        border-left: 8px solid var(--neon);
+        padding-left: 1.5rem;
+        margin-left: 0;
+        text-align: left;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+
+      .blockquote {
+        border-left: 6px solid var(--firm-blue);
+        padding-left: 2rem;
+        font-size: 1.8rem;
+        color: var(--calm-blue);
+        font-style: italic;
+        margin: 3rem 0;
+        text-align: left;
+        line-height: 1.7;
+        max-width: 90%;
+      }
+
+      .reveal .slides section {
+        text-align: center;
+        padding: 0;
+        height: 100%;
+        display: flex !important;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .reveal .slides > section > * {
+        max-width: 90%;
+      }
+
+      /* Workshop slide specific layout */
+      .reveal .slides section:has(.workshop-button) {
+        flex-direction: row !important;
+        align-items: center;
+        gap: 3rem;
+        padding: 2rem;
+      }
+
+      .reveal .slides section:has(.workshop-button) > div:first-child {
+        flex: 1;
+        text-align: left;
+      }
+
+      .reveal .slides section:has(.workshop-button) > div:last-child {
+        flex: 0 0 auto;
+      }
+
+      /* Hide default controls */
+      .reveal .controls {
+        display: none !important;
+      }
+
+      /* Source citation styling */
+      #sourceCite {
+        position: fixed !important;
+        bottom: 2rem !important;
+        left: 2rem !important;
+        font-size: 1rem;
+        color: var(--firm-blue);
+        opacity: 0;
+        visibility: hidden;
+        display: none;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        z-index: 99999 !important;
+        pointer-events: none;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        font-family: 'Space Grotesk', sans-serif;
+        max-width: 400px;
+      }
+      
+      /* Sources are controlled by JavaScript directly */
+
+      /* Source hint indicator */
+      .source-hint {
+        position: fixed;
+        bottom: 1.5rem;
+        left: 1.5rem;
+        font-size: 0.85rem;
+        color: rgba(1, 99, 107, 0.5);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: 2000;
+        pointer-events: none;
+        font-family: 'Space Grotesk', sans-serif;
+      }
+      
+      body.has-sources .source-hint {
+        opacity: 1;
+      }
+
+      /* Workshop button */
+      .workshop-button {
+        background: var(--firm-blue);
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        font-size: 1.2rem;
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 600;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(1, 99, 107, 0.3);
+      }
+
+      .workshop-button:hover {
+        background: var(--deep-green);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(1, 99, 107, 0.4);
+      }
+
+      .workshop-button:active {
+        transform: translateY(0);
+      }
+
+      /* Workshop modal */
+      .workshop-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(3, 55, 60, 0.95);
+        z-index: 10000;
+        display: none;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 2rem 2rem 4rem 2rem;
+      }
+
+      .workshop-modal.active {
+        display: flex !important;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+      }
+
+      .workshop-modal-content {
+        max-width: 1200px;
+        width: 100%;
+        margin: 2rem auto;
+        padding-bottom: 2rem;
+      }
+
+      .workshop-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+      }
+
+      .workshop-modal-header h2 {
+        color: white;
+        font-size: 2.5rem;
+        margin: 0;
+      }
+
+      .workshop-modal-close {
+        background: transparent;
+        border: 2px solid white;
+        color: white;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        font-size: 1.5rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        font-family: 'Space Grotesk', sans-serif;
+      }
+
+      .workshop-modal-close:hover {
+        background: white;
+        color: var(--deep-green);
+      }
+
+      .workshop-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+
+      .workshop-card {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .workshop-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      }
+
+      .workshop-card-role {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--firm-blue);
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .workshop-card-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--deep-green);
+        margin-bottom: 1rem;
+      }
+
+      .workshop-card-description {
+        font-size: 1.1rem;
+        color: var(--calm-blue);
+        line-height: 1.6;
+        margin-bottom: 1rem;
+      }
+
+      .workshop-card-task {
+        background: var(--mint);
+        padding: 1rem;
+        border-radius: 8px;
+        border-left: 4px solid var(--neon);
+        margin-top: 1rem;
+      }
+
+      .workshop-card-task-title {
+        font-weight: 600;
+        color: var(--deep-green);
+        margin-bottom: 0.5rem;
+      }
+
+      .workshop-card-task-list {
+        margin: 0;
+        padding-left: 1.5rem;
+        color: var(--calm-blue);
+      }
+
+      .workshop-card-task-list li {
+        margin-bottom: 0.5rem;
+      }
+
+      /* Logo styling */
+      .logo-header {
+        position: fixed;
+        top: 1.5rem;
+        left: 1.5rem;
+        z-index: 1000;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+      }
+      
+      body:not(.on-title-slide) .logo-header {
+        opacity: 1;
+      }
+      
+      .logo-header img {
+        height: 2rem;
+        width: auto;
+      }
+      
+      .logo-title {
+        max-width: 400px;
+        margin-bottom: 2rem;
+      }
+      
+      .logo-title img {
+        width: 100%;
+        height: auto;
+      }
+
+      /* Fragment animations */
+      .reveal .slides section .fragment {
+        opacity: 0;
+        transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+      }
+
+      .reveal .slides section .fragment.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .reveal .slides section .fragment.fade-in {
+        opacity: 0;
+      }
+
+      .reveal .slides section .fragment.fade-in.visible {
+        opacity: 1;
+      }
+
+      .reveal .slides section .fragment.fade-up {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      .reveal .slides section .fragment.fade-up.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Fragment indicators */
+      .fragment-indicators {
+        position: fixed;
+        bottom: 1rem;
+        right: calc(1rem + 100px);
+        display: flex;
+        gap: 0.6rem;
+        z-index: 1000;
+        pointer-events: none;
+        padding: 0.5rem 1rem;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .fragment-indicator {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: rgba(1, 99, 107, 0.25);
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+      }
+
+      .fragment-indicator.active {
+        background-color: var(--firm-blue);
+        transform: scale(1.4);
+        border-color: var(--firm-blue);
+      }
+
+      .fragment-indicator.completed {
+        background-color: var(--neon);
+        border-color: var(--neon);
+      }
+
+      /* Slide number styling */
+      .reveal .slide-number {
+        color: var(--firm-blue);
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 500;
+        font-size: 1.2rem;
+        background: transparent;
+        padding: 0.5rem 1rem;
+        bottom: 1rem;
+        right: 1rem;
+      }
+
+      /* Better spacing */
+      .reveal section > * {
+        margin-top: 0;
+      }
+
+      .reveal section > * + * {
+        margin-top: 1.5rem;
+      }
+
+      /* Title slide specific */
+      .reveal section:first-child h1 {
+        margin-bottom: 1.5rem;
+      }
+
+      .reveal section:first-child h3 {
+        margin-bottom: 2rem;
+        font-weight: 400;
+      }
+
+      .reveal a {
+        color: var(--firm-blue);
+        text-decoration: none;
+        border-bottom: 2px solid var(--neon);
+        transition: all 0.2s ease;
+      }
+
+      .reveal a:hover {
+        color: var(--deep-green);
+        border-bottom-color: var(--orange);
+        background: rgba(33, 243, 179, 0.1);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+        <section>
+          <div class="logo-title">
+            <img src="img/letsreg-logo.svg" alt="LetsReg Logo" />
+          </div>
+          <h3 style="margin-top: 2rem;">Designing a workspace people want to work in</h3>
+          <p class="fragment fade-up" style="margin-top:50px;color:var(--firm-blue)">Design • UX • Product-Led Growth</p>
+        </section>
+
+        <section>
+          <h2 class="section-title">Design is architecture and ergonomics</h2>
+          <p class="fragment fade-up">Not decoration, but <strong class="accent">the structure of work</strong>.</p>
+          <div class="blockquote fragment fade-up">
+            If a chair squeaks — you fix it.
+             If an app needs five clicks for a simple task — we fix that too.
+          </div>
+        </section>
+
+        <section>
+          <h2>Desk vs. Product</h2>
+          <ul class="fragment fade-up">
+            <li>You move a mug so the cable stops catching.</li>
+            <li>You adjust your chair to avoid back pain.</li>
+            <li>You improve lighting to reduce strain.</li>
+          </ul>
+          <h3 class="fragment fade-up" style="margin-top:40px;color:var(--firm-blue)">LetsReg is our clients' workspace.</h3>
+        </section>
+
+        <section data-source="McKinsey, &quot;The Business Value of Design&quot;">
+          <h2 class="section-title">Hard Data: McKinsey Design Index</h2>
+          <div class="big-number fragment fade-up">+32%</div>
+          <p class="fragment fade-up">Top MDI companies achieve <strong>32% higher revenue</strong> and <strong>56% faster growth</strong>.</p>
+        </section>
+
+        <section>
+          <h2>Why? Ergonomics = Profit</h2>
+          <ul>
+            <li class="fragment fade-up">Less frustration → Higher retention</li>
+            <li class="fragment fade-up">Faster workflows → Lower operational cost</li>
+            <li class="fragment fade-up">Better experience → Organic growth</li>
+          </ul>
+        </section>
+
+        <section data-source="Medium, &quot;UX is the Frontline of Product-Led Growth&quot;">
+          <h2 class="section-title">PLG: UX is the frontline</h2>
+          <div class="blockquote fragment fade-up">
+            "Product-Led Growth starts where users say:
+            <strong>this is simple, fast, and it works.</strong>"
+          </div>
+        </section>
+
+        <section>
+          <h2>Key facts (PLG + UX)</h2>
+          <ul>
+            <li class="fragment fade-up">97% of users judge a product by first UX impression</li>
+            <li class="fragment fade-up">Fastest-growing products "teach themselves" through use</li>
+            <li class="fragment fade-up">Top PLG companies run friction audits every 2 weeks</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="section-title">Ownership</h2>
+          <p class="fragment fade-up">If a meeting room always lacks an HDMI adapter — someone must bring it.</p>
+
+          <h3 class="fragment fade-up" style="margin-top:40px;color:var(--firm-blue)">In LetsReg everyone influences UX:</h3>
+          <ul>
+            <li class="fragment fade-up">Sales sees where clients get lost</li>
+            <li class="fragment fade-up">Support senses user frustration</li>
+            <li class="fragment fade-up">Dev sees technical friction</li>
+            <li class="fragment fade-up">Design connects the dots and prototypes</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Be a user</h2>
+          <ul>
+            <li class="fragment fade-up">Click through LetsReg every day</li>
+            <li class="fragment fade-up">Find the "noisy air conditioner" moments</li>
+            <li class="fragment fade-up">Report small pains — before clients feel them</li>
+          </ul>
+          <h3 class="fragment fade-up" style="margin-top:40px;">The best way to understand the product.</h3>
+        </section>
+
+        <section style="display: flex; align-items: center; gap: 3rem;">
+          <div style="flex: 1;">
+            <h2 class="section-title">Mini Workshop (10–15 min)</h2>
+            <ol>
+              <li class="fragment fade-up">Open LetsReg → choose one real user action.</li>
+              <li class="fragment fade-up">Perform it and observe:
+                <ul>
+                  <li class="fragment fade-up">where you slow down</li>
+                  <li class="fragment fade-up">what feels unclear</li>
+                  <li class="fragment fade-up">what could be simplified</li>
+                </ul>
+              </li>
+              <li class="fragment fade-up">Write down 1–3 improvement ideas.</li>
+            </ol>
+            <p class="fragment fade-up" style="color:var(--firm-blue); margin-top:30px">Goal: create a list of quick wins.</p>
+          </div>
+          <div style="flex: 0 0 auto;">
+            <button class="workshop-button fragment fade-up" onclick="openWorkshopModal()">
+              Show Example User Actions
+            </button>
+          </div>
+        </section>
+
+        <section>
+          <h2>Thank you 🙌</h2>
+          <p class="fragment fade-up">We're building a tool we ourselves want to use.</p>
+          <p class="fragment fade-up" style="margin-top:30px;color:var(--firm-blue)">Questions? Ideas? Suggestions?</p>
+        </section>
+
+        <section>
+          <h2>Sources</h2>
+          <ul style="font-size: 1.4rem;">
+            <li class="fragment fade-up">
+              McKinsey & Company<br>
+              <a href="https://www.mckinsey.com/capabilities/tech-and-ai/our-insights/the-business-value-of-design#/" target="_blank">The Business Value of Design</a>
+            </li>
+            <li class="fragment fade-up">
+              Medium (Design Bootcamp)<br>
+              <a href="https://medium.com/design-bootcamp/ux-is-the-frontline-of-product-led-growth-cfededa20309" target="_blank">UX is the Frontline of Product-Led Growth</a>
+            </li>
+          </ul>
+        </section>
+
+      </div>
+    </div>
+
+    <div class="fragment-indicators" id="fragmentIndicators"></div>
+    <div class="source-hint" id="sourceHint">Hold Shift to show sources</div>
+    <div class="source-cite" id="sourceCite"></div>
+    <div class="logo-header">
+      <img src="img/letsreg-sygnet.svg" alt="LetsReg Sygnet" />
+    </div>
+
+    <!-- Workshop Modal -->
+    <div class="workshop-modal" id="workshopModal">
+      <div class="workshop-modal-content">
+        <div class="workshop-modal-header">
+          <h2>Example User Actions</h2>
+          <button class="workshop-modal-close" onclick="closeWorkshopModal()">×</button>
+        </div>
+        <div class="workshop-cards">
+          <div class="workshop-card">
+            <div class="workshop-card-role">New User</div>
+            <div class="workshop-card-title">Create Account</div>
+            <div class="workshop-card-description">
+              You're a first-time visitor who heard about LetsReg from a friend. You want to explore the platform and see what it offers.
+            </div>
+            <div class="workshop-card-task">
+              <div class="workshop-card-task-title">Your mission:</div>
+              <ul class="workshop-card-task-list">
+                <li>Sign up for a new account</li>
+                <li>Complete your profile</li>
+                <li>Explore the dashboard</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="workshop-card">
+            <div class="workshop-card-role">Event Organizer</div>
+            <div class="workshop-card-title">Create Conference Event</div>
+            <div class="workshop-card-description">
+              You're organizing a professional conference for 200+ attendees. You need to set up registration, manage tickets, and handle check-ins.
+            </div>
+            <div class="workshop-card-task">
+              <div class="workshop-card-task-title">Your mission:</div>
+              <ul class="workshop-card-task-list">
+                <li>Create a new conference event</li>
+                <li>Set up ticket types and pricing</li>
+                <li>Configure registration form</li>
+                <li>Add event details and schedule</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="workshop-card">
+            <div class="workshop-card-role">Workshop Host</div>
+            <div class="workshop-card-title">Create Workshop</div>
+            <div class="workshop-card-description">
+              You're a trainer hosting a hands-on workshop for 15 participants. You want to keep it simple and focused on learning.
+            </div>
+            <div class="workshop-card-task">
+              <div class="workshop-card-task-title">Your mission:</div>
+              <ul class="workshop-card-task-list">
+                <li>Create a workshop event</li>
+                <li>Set limited capacity (15 seats)</li>
+                <li>Add workshop materials and agenda</li>
+                <li>Configure waitlist if needed</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="workshop-card">
+            <div class="workshop-card-role">Community Manager</div>
+            <div class="workshop-card-title">Create Meetup</div>
+            <div class="workshop-card-description">
+              You're organizing a casual community meetup. It's free, open to everyone, and you want to keep it informal and welcoming.
+            </div>
+            <div class="workshop-card-task">
+              <div class="workshop-card-task-title">Your mission:</div>
+              <ul class="workshop-card-task-list">
+                <li>Create a free meetup event</li>
+                <li>Set location and time</li>
+                <li>Add event description</li>
+                <li>Share with community</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="workshop-card">
+            <div class="workshop-card-role">Corporate Admin</div>
+            <div class="workshop-card-title">Create Corporate Training</div>
+            <div class="workshop-card-description">
+              You're setting up mandatory training for your company's employees. You need to track attendance and ensure everyone completes it.
+            </div>
+            <div class="workshop-card-task">
+              <div class="workshop-card-task-title">Your mission:</div>
+              <ul class="workshop-card-task-list">
+                <li>Create internal training event</li>
+                <li>Set up employee access</li>
+                <li>Configure attendance tracking</li>
+                <li>Add completion requirements</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="workshop-card">
+            <div class="workshop-card-role">Returning User</div>
+            <div class="workshop-card-title">Register for Event</div>
+            <div class="workshop-card-description">
+              You've used LetsReg before and want to register for an upcoming event. You remember your login but haven't been active for a while.
+            </div>
+            <div class="workshop-card-task">
+              <div class="workshop-card-task-title">Your mission:</div>
+              <ul class="workshop-card-task-list">
+                <li>Log in to your account</li>
+                <li>Find an event you're interested in</li>
+                <li>Complete registration</li>
+                <li>Confirm your attendance</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/reveal.min.js"></script>
+    <script>
+      // Declare variables first
+      const sourceCite = document.getElementById('sourceCite');
+      let sourcesVisible = false;
+      
+      // Fragment indicators function (needs to be defined before use)
+      function updateFragmentIndicators() {
+        const currentSlide = Reveal.getCurrentSlide();
+        if (!currentSlide) return;
+        
+        const fragments = currentSlide.querySelectorAll('.fragment');
+        const indicatorsContainer = document.getElementById('fragmentIndicators');
+        
+        if (!indicatorsContainer) return;
+        
+        if (fragments.length === 0) {
+          indicatorsContainer.innerHTML = '';
+          return;
+        }
+
+        // We need N+1 indicators where N is number of fragments
+        // The first indicator represents the base slide state (0 fragments visible)
+        const totalStates = fragments.length + 1;
+        const visibleFragments = currentSlide.querySelectorAll('.fragment.visible').length;
+        
+        // Current state is equal to number of visible fragments (0 to N)
+        const currentState = visibleFragments;
+
+        indicatorsContainer.innerHTML = '';
+        
+        for (let i = 0; i < totalStates; i++) {
+          const indicator = document.createElement('div');
+          indicator.className = 'fragment-indicator';
+          
+          if (i < currentState) {
+            indicator.classList.add('completed');
+          } else if (i === currentState) {
+            indicator.classList.add('active');
+          }
+          
+          indicatorsContainer.appendChild(indicator);
+        }
+      }
+
+      // Update source hint text
+      function updateSourceHint() {
+        const hint = document.getElementById('sourceHint');
+        if (hint && sourceCite && sourceCite.textContent.trim() !== '') {
+          hint.textContent = 'Press Ctrl+I or S to show sources';
+        } else if (hint) {
+          hint.textContent = '';
+        }
+      }
+
+      // Check if current slide has sources
+      function checkForSources() {
+        const currentSlide = Reveal.getCurrentSlide();
+        if (!currentSlide) return;
+        
+        const sourceText = currentSlide.getAttribute('data-source');
+        
+        if (sourceText && sourceCite) {
+          sourceCite.textContent = 'Source: ' + sourceText;
+          sourceCite.style.display = 'block';
+          document.body.classList.add('has-sources');
+          sourcesVisible = false; // Reset visibility on slide change
+          sourceCite.style.opacity = '0';
+          sourceCite.style.visibility = 'hidden';
+        } else {
+          if (sourceCite) {
+            sourceCite.textContent = '';
+            sourceCite.style.display = 'none';
+          }
+          document.body.classList.remove('has-sources');
+          sourcesVisible = false;
+        }
+        updateSourceHint();
+      }
+
+      Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        controls: true,
+        progress: true,
+        center: true,
+        touch: true,
+        loop: false,
+        transition: 'slide',
+        transitionSpeed: 'default',
+        backgroundTransition: 'fade',
+        fragments: true,
+        fragmentInURL: false
+      });
+
+      // Set up fragment indicators updates
+      Reveal.on('slidechanged', () => {
+        updateFragmentIndicators();
+        checkForSources();
+        // Hide sources when changing slides
+        sourcesVisible = false;
+        if (sourceCite) {
+          sourceCite.style.opacity = '0';
+          sourceCite.style.visibility = 'hidden';
+        }
+        
+        // Show/hide logo header based on slide index
+        const state = Reveal.getState();
+        if (state.indexh === 0) {
+          document.body.classList.add('on-title-slide');
+        } else {
+          document.body.classList.remove('on-title-slide');
+        }
+      });
+      Reveal.on('fragmentshown', updateFragmentIndicators);
+      Reveal.on('fragmenthidden', updateFragmentIndicators);
+      
+      // Initial update - wait a bit for Reveal to be ready
+      setTimeout(() => {
+        updateFragmentIndicators();
+        checkForSources();
+        
+        // Set initial logo visibility
+        const state = Reveal.getState();
+        if (state.indexh === 0) {
+          document.body.classList.add('on-title-slide');
+        } else {
+          document.body.classList.remove('on-title-slide');
+        }
+      }, 100);
+      
+      function toggleSources() {
+        if (!sourceCite) return;
+        
+        const hasSource = sourceCite.textContent.trim() !== '';
+        if (!hasSource) return;
+        
+        sourcesVisible = !sourcesVisible;
+        
+        if (sourcesVisible) {
+          sourceCite.style.opacity = '1';
+          sourceCite.style.visibility = 'visible';
+          sourceCite.style.display = 'block';
+          console.log('Sources shown:', sourceCite.textContent);
+        } else {
+          sourceCite.style.opacity = '0';
+          sourceCite.style.visibility = 'hidden';
+          sourceCite.style.display = 'none';
+          console.log('Sources hidden');
+        }
+        
+        // Update hint visibility
+        updateSourceHint();
+      }
+      
+      // Listen for Ctrl+I or 'S' key - sources available anytime on slides with sources
+      document.addEventListener('keydown', (e) => {
+        // Ctrl+I or Cmd+I - always toggle sources if available
+        if ((e.ctrlKey || e.metaKey) && e.key === 'i') {
+          e.preventDefault();
+          e.stopPropagation();
+          toggleSources();
+          return false;
+        }
+        
+        // 'S' key - toggle sources if available (regardless of fragments)
+        if (e.key === 's' || e.key === 'S') {
+          const currentSlide = Reveal.getCurrentSlide();
+          if (!currentSlide) return;
+          
+          // Check if current slide has sources
+          const hasSources = currentSlide.getAttribute('data-source');
+          
+          if (hasSources && sourceCite && sourceCite.textContent.trim() !== '') {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleSources();
+            return false;
+          }
+        }
+      }, true);
+      
+      // Update hint text
+      function updateSourceHint() {
+        const hint = document.getElementById('sourceHint');
+        if (!hint) return;
+        
+        // Hide hint if sources are visible
+        if (sourcesVisible) {
+          hint.style.opacity = '0';
+          hint.style.visibility = 'hidden';
+          return;
+        }
+        
+        // Show hint if slide has sources
+        if (sourceCite && sourceCite.textContent.trim() !== '') {
+          hint.textContent = 'S';
+          hint.style.opacity = '1';
+          hint.style.visibility = 'visible';
+        } else {
+          hint.style.opacity = '0';
+          hint.style.visibility = 'hidden';
+        }
+      }
+      
+      // Test function - can be called from console
+      window.testSources = function() {
+        if (sourceCite) {
+          sourceCite.textContent = 'Test source: McKinsey Design Index';
+          updateSourceHint();
+          toggleSources();
+        }
+      };
+
+      // Workshop modal functions
+      window.openWorkshopModal = function() {
+        const modal = document.getElementById('workshopModal');
+        if (modal) {
+          modal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+          console.log('Modal opened');
+        } else {
+          console.error('Modal element not found');
+        }
+      };
+
+      window.closeWorkshopModal = function() {
+        const modal = document.getElementById('workshopModal');
+        if (modal) {
+          modal.classList.remove('active');
+          document.body.style.overflow = '';
+          console.log('Modal closed');
+        }
+      };
+
+      // Close modal on Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          window.closeWorkshopModal();
+        }
+      });
+
+      // Close modal when clicking outside
+      const workshopModal = document.getElementById('workshopModal');
+      if (workshopModal) {
+        workshopModal.addEventListener('click', (e) => {
+          if (e.target.id === 'workshopModal' || e.target.classList.contains('workshop-modal')) {
+            window.closeWorkshopModal();
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
