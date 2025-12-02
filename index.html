@@ -1,8 +1,44 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LetsReg – Design, UX & Product-Led Growth</title>
+    
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="LetsReg – Design, UX & Product-Led Growth" />
+    <meta name="description" content="Designing a workspace people want to work in. Learn about design, UX, and Product-Led Growth principles." />
+    
+    <!-- Open Graph / Facebook / Slack / Teams -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://letsreg-plg.netlify.app/" />
+    <meta property="og:title" content="LetsReg – Design, UX & Product-Led Growth" />
+    <meta property="og:description" content="Designing a workspace people want to work in. Learn about design, UX, and Product-Led Growth principles." />
+    <meta property="og:image" content="https://letsreg-plg.netlify.app/img/cover.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="LetsReg – Design, UX & Product-Led Growth Presentation" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://letsreg-plg.netlify.app/" />
+    <meta name="twitter:title" content="LetsReg – Design, UX & Product-Led Growth" />
+    <meta name="twitter:description" content="Designing a workspace people want to work in. Learn about design, UX, and Product-Led Growth principles." />
+    <meta name="twitter:image" content="https://letsreg-plg.netlify.app/img/cover.png" />
+    <meta name="twitter:image:alt" content="LetsReg – Design, UX & Product-Led Growth Presentation" />
+    
+    <!-- LinkedIn -->
+    <meta property="linkedin:owner" content="LetsReg" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://letsreg-plg.netlify.app/" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="img/favicon-48x48.png" />
+    <link rel="icon" type="image/svg+xml" href="img/letsreg-sygnet.svg" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -459,6 +495,7 @@
         transition: all 0.3s ease;
         border: 2px solid transparent;
         cursor: pointer;
+        position: relative;
       }
 
       .fragment-indicator:hover {
@@ -484,10 +521,6 @@
       .fragment-indicator.completed:hover {
         background-color: var(--firm-blue);
         border-color: var(--firm-blue);
-      }
-
-      .fragment-indicator {
-        position: relative;
       }
 
       .fragment-indicator .tooltip {
@@ -607,6 +640,119 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+      }
+
+      /* Table of Contents Modal */
+      .toc-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(3, 55, 60, 0.95);
+        z-index: 10001;
+        display: none;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 2rem;
+      }
+
+      .toc-modal.active {
+        display: flex !important;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+      }
+
+      .toc-modal-content {
+        max-width: 800px;
+        width: 100%;
+        margin: 2rem auto;
+        padding-bottom: 2rem;
+      }
+
+      .toc-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+      }
+
+      .toc-modal-header h2 {
+        color: white;
+        font-size: 2.5rem;
+        margin: 0;
+        font-family: 'Fraunces', Georgia, serif;
+      }
+
+      .toc-modal-close {
+        background: transparent;
+        border: 2px solid white;
+        color: white;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        font-size: 1.5rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        line-height: 1;
+      }
+
+      .toc-modal-close:hover {
+        background: white;
+        color: var(--deep-green);
+      }
+
+      .toc-list {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        max-height: 70vh;
+        overflow-y: auto;
+      }
+
+      .toc-item {
+        padding: 1rem;
+        margin-bottom: 0.5rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border-left: 4px solid transparent;
+      }
+
+      .toc-item:hover {
+        background: rgba(1, 99, 107, 0.1);
+        border-left-color: var(--firm-blue);
+        transform: translateX(4px);
+      }
+
+      .toc-item.active {
+        background: rgba(1, 99, 107, 0.15);
+        border-left-color: var(--neon);
+      }
+
+      .toc-item-number {
+        display: inline-block;
+        width: 2rem;
+        color: var(--firm-blue);
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      .toc-item-title {
+        color: var(--deep-green);
+        font-size: 1.1rem;
+        line-height: 1.4;
+      }
+
+      .toc-shortcut-hint {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.9rem;
+        margin-top: 1rem;
+        text-align: center;
       }
 
       /* Better spacing */
@@ -795,31 +941,17 @@
             </ol>
             <p class="fragment fade-up" style="color:var(--firm-blue); margin-top:30px">Goal: create a list of quick wins.</p>
           </div>
-          <div style="flex: 0 0 auto; display: flex; flex-direction: column; gap: 1rem;">
+          <div style="flex: 0 0 auto;">
             <button class="workshop-button fragment fade-up" onclick="openWorkshopModal()">
               Show Example User Actions
-            </button>
-            <button class="workshop-button fragment fade-up" onclick="openTemplateModal()" style="background: var(--calm-blue);">
-              Show Problem Report Template
             </button>
           </div>
         </section>
 
         <section>
-          <h2>Thank you!</h2>
-          <p class="fragment fade-up" style="font-size: 1.3rem;">We're building a tool we ourselves want to use.</p>
-          
-          <div class="fragment fade-up" style="margin-top: 2rem; padding: 1.5rem; background: rgba(1, 99, 107, 0.05); border-radius: 12px; max-width: 600px; margin-left: auto; margin-right: auto;">
-            <p style="font-size: 1.1rem; margin: 0 0 0.5rem 0; color: var(--deep-green);"><strong>Jan Mirecki</strong></p>
-            <p style="font-size: 0.95rem; margin: 0 0 1rem 0; color: var(--firm-blue);">Product Designer & Frontend Developer @ LetsReg</p>
-            <p style="font-size: 1rem; margin: 0;">
-              <a href="mailto:jan@letsreg.no" style="color: var(--firm-blue);">jan@letsreg.no</a>
-            </p>
-          </div>
-          
-          <p class="fragment fade-up" style="margin-top: 1.5rem; font-size: 1rem; color: var(--calm-blue);">
-            Questions? Ideas? Reach out via email, Slack, or Teams!
-          </p>
+          <h2>Thank you 🙌</h2>
+          <p class="fragment fade-up">We're building a tool we ourselves want to use.</p>
+          <p class="fragment fade-up" style="margin-top:30px;color:var(--firm-blue)">Questions? Ideas? Suggestions?</p>
         </section>
 
         <section>
@@ -977,50 +1109,18 @@
       </div>
     </div>
 
-    <!-- Problem Report Template Modal -->
-    <div class="workshop-modal" id="templateModal">
-      <div class="workshop-modal-content">
-        <div class="workshop-modal-header">
-          <h2>Problem Report Template</h2>
-          <button class="workshop-modal-close" onclick="closeTemplateModal()">×</button>
+    <!-- Table of Contents Modal -->
+    <div class="toc-modal" id="tocModal">
+      <div class="toc-modal-content">
+        <div class="toc-modal-header">
+          <h2>Table of Contents</h2>
+          <button class="toc-modal-close" onclick="closeTOCModal()">×</button>
         </div>
-        <div style="background: white; padding: 2rem; border-radius: 12px; max-width: 800px; margin: 0 auto;">
-          <p style="font-size: 1.1rem; color: var(--calm-blue); margin-bottom: 1.5rem;">
-            Use this template when reporting UX issues via Slack, Teams, or email. Clear, structured reports help prioritize and fix problems faster.
-          </p>
-          
-          <div style="background: rgba(1, 99, 107, 0.05); padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--firm-blue); margin-bottom: 1.5rem;">
-            <h3 style="font-size: 1.2rem; color: var(--firm-blue); margin: 0 0 1rem 0;">📋 Template Structure</h3>
-            <div style="font-family: 'Courier New', monospace; font-size: 0.9rem; line-height: 1.8; color: var(--deep-green); white-space: pre-wrap; background: white; padding: 1rem; border-radius: 6px;">
-<strong>📍 Context:</strong> What I was trying to do
-[Brief description of the user action or task]
-
-<strong>🐛 Problem:</strong> What went wrong
-[Specific issue encountered - be concrete]
-
-<strong>💥 Impact:</strong> Why this matters
-[How this affects the user experience or workflow]
-
-<strong>💡 Suggestion:</strong> What could be improved
-[Optional: your idea for a solution]
-            </div>
-          </div>
-
-          <div style="background: rgba(33, 243, 179, 0.08); padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--neon);">
-            <h3 style="font-size: 1.2rem; color: var(--deep-green); margin: 0 0 1rem 0;">✨ Example</h3>
-            <div style="font-size: 0.95rem; line-height: 1.7; color: var(--deep-green);">
-              <p style="margin: 0 0 0.8rem 0;"><strong>📍 Context:</strong> I was creating a new event and wanted to add multiple ticket types.</p>
-              <p style="margin: 0 0 0.8rem 0;"><strong>🐛 Problem:</strong> After adding the first ticket type, the "Add another ticket" button was hidden below the fold. I had to scroll down to find it, which wasn't obvious.</p>
-              <p style="margin: 0 0 0.8rem 0;"><strong>💥 Impact:</strong> This creates friction for event organizers who need to set up multiple ticket tiers. They might think they can only add one type, or miss the option entirely.</p>
-              <p style="margin: 0;"><strong>💡 Suggestion:</strong> Could we keep the "Add ticket type" button sticky or always visible, or show a preview of existing tickets above the form?</p>
-            </div>
-          </div>
-
-          <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(255, 107, 53, 0.08); border-radius: 8px; border-left: 4px solid var(--orange);">
-            <p style="margin: 0; font-size: 0.9rem; color: var(--deep-green);">
-              <strong>💬 Pro tip:</strong> Copy this template to your notes and use it consistently. The more structured your reports, the easier it is for the team to understand and act on them.
-            </p>
-          </div>
+        <div class="toc-list" id="tocList">
+          <!-- Generated dynamically -->
+        </div>
+        <div class="toc-shortcut-hint">
+          Press <strong>T</strong> or <strong>Esc</strong> to close
         </div>
       </div>
     </div>
@@ -1036,7 +1136,7 @@
         const currentSlide = Reveal.getCurrentSlide();
         if (!currentSlide) return;
         
-        const fragments = Array.from(currentSlide.querySelectorAll('.fragment'));
+        const fragments = currentSlide.querySelectorAll('.fragment');
         const indicatorsContainer = document.getElementById('fragmentIndicators');
         
         if (!indicatorsContainer) return;
@@ -1055,6 +1155,8 @@
         const currentState = visibleFragments;
 
         indicatorsContainer.innerHTML = '';
+        
+        const fragmentsArray = Array.from(fragments);
         
         for (let i = 0; i < totalStates; i++) {
           const indicator = document.createElement('div');
@@ -1075,7 +1177,7 @@
             tooltip.textContent = slideTitle ? truncateText(slideTitle.textContent, 25) : 'Slide start';
           } else {
             // Fragment content preview
-            const fragment = fragments[i - 1];
+            const fragment = fragmentsArray[i - 1];
             const text = getFragmentPreview(fragment);
             tooltip.textContent = truncateText(text, 30);
           }
@@ -1083,7 +1185,7 @@
           
           // Add click handler to navigate to specific fragment state
           indicator.addEventListener('click', () => {
-            navigateToFragmentState(i, fragments);
+            navigateToFragmentState(i, fragmentsArray);
           });
           
           indicatorsContainer.appendChild(indicator);
@@ -1197,6 +1299,7 @@
       Reveal.on('slidechanged', (event) => {
         updateFragmentIndicators();
         checkForSources();
+        updateTOCActiveItem();
         // Hide sources when changing slides
         sourcesVisible = false;
         if (sourceCite) {
@@ -1397,23 +1500,75 @@
         }
       };
 
-      window.openTemplateModal = function() {
-        const modal = document.getElementById('templateModal');
+      // Table of Contents functions
+      // Get slide title
+      function getSlideTitle(slide) {
+        if (!slide) return '';
+        const h2 = slide.querySelector('h2');
+        if (h2) return h2.textContent;
+        const h3 = slide.querySelector('h3');
+        if (h3) return h3.textContent;
+        return 'Slide';
+      }
+      
+      function generateTOC() {
+        const tocList = document.getElementById('tocList');
+        if (!tocList) return;
+        
+        const slides = document.querySelectorAll('.reveal .slides > section');
+        tocList.innerHTML = '';
+        
+        slides.forEach((slide, index) => {
+          const title = getSlideTitle(slide);
+          const tocItem = document.createElement('div');
+          tocItem.className = 'toc-item';
+          tocItem.innerHTML = `
+            <span class="toc-item-number">${index + 1}</span>
+            <span class="toc-item-title">${title}</span>
+          `;
+          
+          tocItem.addEventListener('click', () => {
+            Reveal.slide(index);
+            closeTOCModal();
+          });
+          
+          tocList.appendChild(tocItem);
+        });
+        
+        updateTOCActiveItem();
+      }
+      
+      function updateTOCActiveItem() {
+        const tocItems = document.querySelectorAll('.toc-item');
+        const currentIndex = Reveal.getIndices().h;
+        
+        tocItems.forEach((item, index) => {
+          if (index === currentIndex) {
+            item.classList.add('active');
+          } else {
+            item.classList.remove('active');
+          }
+        });
+      }
+      
+      window.openTOCModal = function() {
+        const modal = document.getElementById('tocModal');
         if (modal) {
+          generateTOC();
           modal.classList.add('active');
           document.body.style.overflow = 'hidden';
-          console.log('Template modal opened');
+          console.log('TOC modal opened');
         } else {
-          console.error('Template modal element not found');
+          console.error('TOC modal element not found');
         }
       };
-
-      window.closeTemplateModal = function() {
-        const modal = document.getElementById('templateModal');
+      
+      window.closeTOCModal = function() {
+        const modal = document.getElementById('tocModal');
         if (modal) {
           modal.classList.remove('active');
           document.body.style.overflow = '';
-          console.log('Template modal closed');
+          console.log('TOC modal closed');
         }
       };
 
@@ -1421,7 +1576,21 @@
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
           window.closeWorkshopModal();
-          window.closeTemplateModal();
+          window.closeTOCModal();
+        }
+        
+        // T key to toggle TOC
+        if (e.key === 't' || e.key === 'T') {
+          const tocModal = document.getElementById('tocModal');
+          if (tocModal && tocModal.classList.contains('active')) {
+            window.closeTOCModal();
+          } else {
+            // Only open if no other modal is open
+            const workshopModal = document.getElementById('workshopModal');
+            if (!workshopModal.classList.contains('active')) {
+              window.openTOCModal();
+            }
+          }
         }
       });
 
@@ -1434,12 +1603,12 @@
           }
         });
       }
-
-      const templateModal = document.getElementById('templateModal');
-      if (templateModal) {
-        templateModal.addEventListener('click', (e) => {
-          if (e.target.id === 'templateModal' || e.target.classList.contains('workshop-modal')) {
-            window.closeTemplateModal();
+      
+      const tocModal = document.getElementById('tocModal');
+      if (tocModal) {
+        tocModal.addEventListener('click', (e) => {
+          if (e.target.id === 'tocModal' || e.target.classList.contains('toc-modal')) {
+            window.closeTOCModal();
           }
         });
       }
