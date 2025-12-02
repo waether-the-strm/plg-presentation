@@ -795,9 +795,12 @@
             </ol>
             <p class="fragment fade-up" style="color:var(--firm-blue); margin-top:30px">Goal: create a list of quick wins.</p>
           </div>
-          <div style="flex: 0 0 auto;">
+          <div style="flex: 0 0 auto; display: flex; flex-direction: column; gap: 1rem;">
             <button class="workshop-button fragment fade-up" onclick="openWorkshopModal()">
               Show Example User Actions
+            </button>
+            <button class="workshop-button fragment fade-up" onclick="openTemplateModal()" style="background: var(--calm-blue);">
+              Show Problem Report Template
             </button>
           </div>
         </section>
@@ -969,6 +972,54 @@
                 <li>Confirm your attendance</li>
               </ul>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem Report Template Modal -->
+    <div class="workshop-modal" id="templateModal">
+      <div class="workshop-modal-content">
+        <div class="workshop-modal-header">
+          <h2>Problem Report Template</h2>
+          <button class="workshop-modal-close" onclick="closeTemplateModal()">×</button>
+        </div>
+        <div style="background: white; padding: 2rem; border-radius: 12px; max-width: 800px; margin: 0 auto;">
+          <p style="font-size: 1.1rem; color: var(--calm-blue); margin-bottom: 1.5rem;">
+            Use this template when reporting UX issues via Slack, Teams, or email. Clear, structured reports help prioritize and fix problems faster.
+          </p>
+          
+          <div style="background: rgba(1, 99, 107, 0.05); padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--firm-blue); margin-bottom: 1.5rem;">
+            <h3 style="font-size: 1.2rem; color: var(--firm-blue); margin: 0 0 1rem 0;">📋 Template Structure</h3>
+            <div style="font-family: 'Courier New', monospace; font-size: 0.9rem; line-height: 1.8; color: var(--deep-green); white-space: pre-wrap; background: white; padding: 1rem; border-radius: 6px;">
+<strong>📍 Context:</strong> What I was trying to do
+[Brief description of the user action or task]
+
+<strong>🐛 Problem:</strong> What went wrong
+[Specific issue encountered - be concrete]
+
+<strong>💥 Impact:</strong> Why this matters
+[How this affects the user experience or workflow]
+
+<strong>💡 Suggestion:</strong> What could be improved
+[Optional: your idea for a solution]
+            </div>
+          </div>
+
+          <div style="background: rgba(33, 243, 179, 0.08); padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--neon);">
+            <h3 style="font-size: 1.2rem; color: var(--deep-green); margin: 0 0 1rem 0;">✨ Example</h3>
+            <div style="font-size: 0.95rem; line-height: 1.7; color: var(--deep-green);">
+              <p style="margin: 0 0 0.8rem 0;"><strong>📍 Context:</strong> I was creating a new event and wanted to add multiple ticket types.</p>
+              <p style="margin: 0 0 0.8rem 0;"><strong>🐛 Problem:</strong> After adding the first ticket type, the "Add another ticket" button was hidden below the fold. I had to scroll down to find it, which wasn't obvious.</p>
+              <p style="margin: 0 0 0.8rem 0;"><strong>💥 Impact:</strong> This creates friction for event organizers who need to set up multiple ticket tiers. They might think they can only add one type, or miss the option entirely.</p>
+              <p style="margin: 0;"><strong>💡 Suggestion:</strong> Could we keep the "Add ticket type" button sticky or always visible, or show a preview of existing tickets above the form?</p>
+            </div>
+          </div>
+
+          <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(255, 107, 53, 0.08); border-radius: 8px; border-left: 4px solid var(--orange);">
+            <p style="margin: 0; font-size: 0.9rem; color: var(--deep-green);">
+              <strong>💬 Pro tip:</strong> Copy this template to your notes and use it consistently. The more structured your reports, the easier it is for the team to understand and act on them.
+            </p>
           </div>
         </div>
       </div>
@@ -1346,10 +1397,31 @@
         }
       };
 
+      window.openTemplateModal = function() {
+        const modal = document.getElementById('templateModal');
+        if (modal) {
+          modal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+          console.log('Template modal opened');
+        } else {
+          console.error('Template modal element not found');
+        }
+      };
+
+      window.closeTemplateModal = function() {
+        const modal = document.getElementById('templateModal');
+        if (modal) {
+          modal.classList.remove('active');
+          document.body.style.overflow = '';
+          console.log('Template modal closed');
+        }
+      };
+
       // Close modal on Escape key
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
           window.closeWorkshopModal();
+          window.closeTemplateModal();
         }
       });
 
@@ -1359,6 +1431,15 @@
         workshopModal.addEventListener('click', (e) => {
           if (e.target.id === 'workshopModal' || e.target.classList.contains('workshop-modal')) {
             window.closeWorkshopModal();
+          }
+        });
+      }
+
+      const templateModal = document.getElementById('templateModal');
+      if (templateModal) {
+        templateModal.addEventListener('click', (e) => {
+          if (e.target.id === 'templateModal' || e.target.classList.contains('workshop-modal')) {
+            window.closeTemplateModal();
           }
         });
       }
